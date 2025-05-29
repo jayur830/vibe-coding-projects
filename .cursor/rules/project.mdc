@@ -1,0 +1,102 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Vibe Coding Project Rules
+
+## Core Development Principles
+
+### 1. Test-Driven Development (TDD)
+- **테스트 코드를 먼저 만드세요**
+- Write tests before implementing functionality
+- Follow the Red-Green-Refactor cycle:
+  1. Red: Write a failing test
+  2. Green: Write minimal code to pass the test
+  3. Refactor: Improve code while keeping tests passing
+
+### 2. Test Quality Priority
+- **테스트 코드를 통과하는 것이 가장 중요합니다**
+- All tests must pass before considering implementation complete
+- Maintain high test coverage (aim for >90%)
+- Write meaningful test descriptions in Korean
+- Include edge cases and error scenarios in tests
+
+### 3. Documentation Standards
+- **README.md를 만들 때 첫 소개로 무조건 바이브 코딩으로 만들었다는 내용으로 시작하세요**
+- Every README.md must begin with: "이 프로젝트는 바이브 코딩으로 제작되었습니다."
+- Include comprehensive project setup instructions
+- Document all major features and usage examples
+- Maintain Korean language documentation for Korean speakers
+
+### 4. Language and Framework Standards
+- **TypeScript를 사용하세요**
+- Use TypeScript for all new projects and features
+- Maintain strict type checking
+- Define proper interfaces and types
+- Use modern TypeScript features and best practices
+
+## Code Quality Guidelines
+
+### TypeScript Best Practices
+- Enable strict mode in tsconfig.json
+- Use proper type annotations
+- Avoid `any` type unless absolutely necessary
+- Implement proper error handling with typed errors
+- Use union types and type guards appropriately
+
+### Testing Standards
+- Use Jest for unit testing
+- Use React Testing Library for React component testing
+- Write descriptive test names in Korean
+- Group related tests using `describe` blocks
+- Mock external dependencies appropriately
+- Test both success and failure scenarios
+
+### File Structure
+- Organize files by feature, not by file type
+- Keep related test files next to source files
+- Use consistent naming conventions
+- Maintain clean import/export statements
+
+### Git Commit Standards
+- Write clear, descriptive commit messages in Korean
+- Use conventional commit format when appropriate
+- Keep commits focused and atomic
+- Include test updates in the same commit as implementation
+
+## Project-Specific Rules
+
+### React Projects
+- Use functional components with hooks
+- Implement proper prop types with TypeScript interfaces
+- Use React Testing Library for component testing
+- Follow React best practices for state management
+
+### Node.js Projects
+- Use ES modules when possible
+- Implement proper error handling middleware
+- Write integration tests for API endpoints
+- Use environment variables for configuration
+
+### CSS/Styling
+- Use modern CSS features (Grid, Flexbox)
+- Implement responsive design from the start
+- Use CSS-in-JS or CSS modules for component styling
+- Maintain consistent design tokens
+
+## Automation and CI/CD
+
+### Development Workflow
+- Run tests automatically on save
+- Use pre-commit hooks for code quality checks
+- Implement automated testing in CI/CD pipeline
+- Ensure all tests pass before merging to main branch
+
+### Code Quality Tools
+- Use ESLint with TypeScript support
+- Configure Prettier for consistent formatting
+- Use Husky for git hooks
+- Implement automated dependency updates
+
+Remember: These rules exist to ensure consistent, high-quality code that is well-tested and maintainable. Always prioritize test coverage and code quality over speed of delivery. 
