@@ -30,7 +30,7 @@
 
 ### ⭕ Tic-Tac-Toe (틱택토 게임)
 - **위치**: `./tic-tac-toe/`
-- **기술 스택**: React, CSS3, JavaScript ES6+
+- **기술 스택**: React, TypeScript, CSS3
 - **설명**: 아름다운 UI를 갖춘 클래식 틱택토 게임
 - **특징**:
   - 현대적 그라디언트 디자인과 애니메이션 효과

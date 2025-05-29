@@ -36,6 +36,13 @@ alwaysApply: true
 - Define proper interfaces and types
 - Use modern TypeScript features and best practices
 
+### 5. Build Tool Standards
+- **React 앱을 구현할 경우 create-react-app 대신 Vite를 사용하세요**
+- Use Vite for all new React projects instead of create-react-app
+- Configure Vite with TypeScript support
+- Leverage Vite's fast development server and hot module replacement
+- Use Vite plugins for enhanced development experience
+
 ## Code Quality Guidelines
 
 ### TypeScript Best Practices
@@ -45,9 +52,17 @@ alwaysApply: true
 - Implement proper error handling with typed errors
 - Use union types and type guards appropriately
 
+### Vite Configuration Standards
+- Use `npm create vite@latest project-name -- --template react-ts` for new React projects
+- Configure vite.config.ts with proper base settings
+- Use environment variables with proper typing
+- Configure path aliases for clean imports
+- Set up proper build optimization settings
+
 ### Testing Standards
-- Use Jest for unit testing
+- Use Vitest (Vite's native test runner) for unit testing
 - Use React Testing Library for React component testing
+- Configure @testing-library/jest-dom for extended matchers
 - Write descriptive test names in Korean
 - Group related tests using `describe` blocks
 - Mock external dependencies appropriately
@@ -58,6 +73,7 @@ alwaysApply: true
 - Keep related test files next to source files
 - Use consistent naming conventions
 - Maintain clean import/export statements
+- Use absolute imports with path aliases
 
 ### Git Commit Standards
 - Write clear, descriptive commit messages in Korean
@@ -67,11 +83,13 @@ alwaysApply: true
 
 ## Project-Specific Rules
 
-### React Projects
+### React Projects with Vite
 - Use functional components with hooks
 - Implement proper prop types with TypeScript interfaces
-- Use React Testing Library for component testing
+- Use React Testing Library with Vitest for component testing
 - Follow React best practices for state management
+- Configure Vite for optimal development and production builds
+- Use Vite's built-in CSS processing and hot reload features
 
 ### Node.js Projects
 - Use ES modules when possible
@@ -84,11 +102,12 @@ alwaysApply: true
 - Implement responsive design from the start
 - Use CSS-in-JS or CSS modules for component styling
 - Maintain consistent design tokens
+- Leverage Vite's CSS preprocessing capabilities
 
 ## Automation and CI/CD
 
 ### Development Workflow
-- Run tests automatically on save
+- Run tests automatically on save using Vitest watch mode
 - Use pre-commit hooks for code quality checks
 - Implement automated testing in CI/CD pipeline
 - Ensure all tests pass before merging to main branch
@@ -98,5 +117,28 @@ alwaysApply: true
 - Configure Prettier for consistent formatting
 - Use Husky for git hooks
 - Implement automated dependency updates
+- Configure Vite's built-in linting integration
 
-Remember: These rules exist to ensure consistent, high-quality code that is well-tested and maintainable. Always prioritize test coverage and code quality over speed of delivery. 
+### Vite-Specific Best Practices
+- Use Vite's development server for local development
+- Configure proper preview settings for production testing
+- Leverage Vite's tree-shaking capabilities
+- Use dynamic imports for code splitting
+- Configure proper asset handling and optimization
+
+## Package.json Scripts
+For Vite projects, use these standard scripts:
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  }
+}
+```
+
+Remember: These rules exist to ensure consistent, high-quality code that is well-tested and maintainable. Always prioritize test coverage and code quality over speed of delivery. Use Vite for modern, fast development experience with React applications. 

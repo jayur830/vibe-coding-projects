@@ -1,188 +1,54 @@
-# 기사의 여행 (Knight's Tour)
+# React + TypeScript + Vite
 
-> *이 프로젝트는 바이브 코딩으로 제작되었습니다.*
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 프로젝트 소개
+Currently, two official plugins are available:
 
-기사의 여행(Knight's Tour)은 체스의 나이트(기사) 말이 체스판의 모든 칸을 정확히 한 번씩 방문하는 수학적 퍼즐을 게임화한 React 웹 애플리케이션입니다. 이 프로젝트는 테스트 주도 개발(TDD) 방식으로 개발되었으며, 현대적인 웹 기술을 활용하여 구현되었습니다.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## ✨ 주요 기능
+## Expanding the ESLint configuration
 
-### 🎮 게임 플레이
-- **다양한 보드 크기**: 5×5, 6×6, 7×7, 8×8 보드 선택 가능
-- **직관적인 인터페이스**: 클릭만으로 간편한 나이트 이동
-- **실시간 피드백**: 이동 가능한 위치 표시 및 진행률 추적
-- **나이트 움직임 규칙**: 체스의 정통 L자 모양 이동
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### 🧠 지능형 힌트 시스템
-- **Warnsdorff의 규칙**: 수학적 알고리즘 기반 최적 경로 제안
-- **전략적 가이드**: 막다른 길을 피하는 지능형 힌트 제공
-
-### 🎨 현대적 UI/UX
-- **반응형 디자인**: 모든 디바이스에서 최적화된 경험
-- **부드러운 애니메이션**: 나이트 바운스, 펄스 효과, 깜빡이는 이동 가능 위치
-- **시각적 피드백**: 전통적인 체스판 색상과 현대적인 그라디언트 조합
-- **접근성**: 키보드 네비게이션 및 스크린 리더 지원
-
-### 🎯 게임 기능
-- **진행률 추적**: 실시간 완성도 표시
-- **게임 상태 관리**: 승리/패배 조건 및 게임 초기화
-- **난이도 안내**: 각 보드 크기별 난이도 정보 제공
-
-## 🛠 기술 스택
-
-- **Frontend**: React 18, JavaScript (ES6+)
-- **Styling**: CSS3 (Grid, Flexbox, Animations)
-- **Testing**: Jest, React Testing Library
-- **Development**: Create React App, ESLint
-- **Algorithm**: Warnsdorff's Rule, Backtracking
-
-## 📊 테스트 커버리지
-
-이 프로젝트는 포괄적인 테스트 스위트를 포함합니다:
-- **총 47개 테스트** (모두 통과 ✅)
-- **UI 테스트**: 렌더링, 사용자 상호작용, 접근성
-- **게임 로직 테스트**: 나이트 움직임, 승리 조건, 힌트 시스템
-- **단위 테스트**: 개별 함수 및 컴포넌트 테스트
-- **통합 테스트**: 전체 게임 플로우 테스트
-
-## 🚀 시작하기
-
-### 필요 조건
-- Node.js 14.0.0 이상
-- npm 6.0.0 이상
-
-### 설치 및 실행
-
-```bash
-# 저장소 클론
-git clone [repository-url]
-cd knights-tour
-
-# 의존성 설치
-npm install
-
-# 개발 서버 시작
-npm start
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
 
-웹 브라우저에서 `http://localhost:3000`으로 접속하여 게임을 즐기세요!
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-### 테스트 실행
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-```bash
-# 모든 테스트 실행
-npm test
-
-# 테스트 커버리지 확인
-npm test -- --coverage
-
-# 특정 테스트 파일 실행
-npm test App.test.js
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+})
 ```
-
-### 프로덕션 빌드
-
-```bash
-# 프로덕션 빌드 생성
-npm run build
-
-# 빌드된 파일은 build/ 디렉토리에 생성됩니다
-```
-
-## 🎯 게임 규칙
-
-1. **나이트 이동**: 체스의 나이트는 L자 모양으로만 이동할 수 있습니다
-2. **한 번 방문**: 각 칸은 정확히 한 번만 방문할 수 있습니다
-3. **완주 목표**: 선택한 보드의 모든 칸을 방문하면 승리합니다
-4. **힌트 활용**: 막혔을 때 Warnsdorff 알고리즘 기반 힌트를 참고하세요
-
-### 난이도별 특징
-
-- **5×5 (25칸)**: 매우 어려움 - 해가 존재하지 않을 수 있음
-- **6×6 (36칸)**: 어려움 - 해가 매우 제한적
-- **7×7 (49칸)**: 보통 - 도전적이지만 해결 가능
-- **8×8 (64칸)**: 표준 - 전통적인 기사의 여행
-
-## 📂 프로젝트 구조
-
-```
-knights-tour/
-├── public/
-│   ├── index.html
-│   └── favicon.ico
-├── src/
-│   ├── App.js              # 메인 게임 컴포넌트
-│   ├── App.css             # 스타일시트
-│   ├── App.test.js         # 컴포넌트 테스트
-│   ├── gameLogic.test.js   # 게임 로직 테스트
-│   └── index.js            # 애플리케이션 엔트리 포인트
-├── package.json
-└── README.md               # 이 파일
-```
-
-## 🧪 테스트 방법론
-
-이 프로젝트는 테스트 주도 개발(TDD) 방식으로 개발되었습니다:
-
-### 테스트 분류
-1. **단위 테스트**: 개별 함수 및 컴포넌트 로직
-2. **통합 테스트**: 컴포넌트 간 상호작용
-3. **UI 테스트**: 사용자 인터페이스 및 상호작용
-4. **알고리즘 테스트**: 게임 로직 및 힌트 시스템
-
-### 테스트 실행 명령어
-```bash
-# 모든 테스트 실행 (watch 모드)
-npm test
-
-# 한 번만 실행 (CI 환경)
-npm test -- --watchAll=false
-
-# 커버리지 리포트 생성
-npm test -- --coverage --watchAll=false
-```
-
-## 🔧 개발 환경 설정
-
-### 권장 VS Code 확장 프로그램
-- ES7+ React/Redux/React-Native snippets
-- Prettier - Code formatter
-- ESLint
-- Auto Rename Tag
-- Bracket Pair Colorizer
-
-### 코드 스타일
-- Prettier를 사용한 자동 포맷팅
-- ESLint를 통한 코드 품질 관리
-- 의미 있는 변수명과 함수명 사용
-
-## 🤝 기여 가이드라인
-
-1. 이슈를 먼저 확인하고 중복된 작업을 피해주세요
-2. 새로운 기능은 테스트 코드를 먼저 작성해주세요
-3. 커밋 메시지는 한국어로 명확하게 작성해주세요
-4. Pull Request 전에 모든 테스트가 통과하는지 확인해주세요
-
-### 개발 워크플로우
-1. Fork 후 feature 브랜치 생성
-2. 테스트 코드 작성 (Red)
-3. 기능 구현 (Green)
-4. 리팩토링 (Refactor)
-5. Pull Request 생성
-
-## 📜 라이선스
-
-이 프로젝트는 MIT 라이선스 하에 배포됩니다.
-
-## 🎓 알고리즘 배경
-
-### Knight's Tour 문제
-기사의 여행은 오일러의 시대부터 연구된 고전적인 수학 문제입니다. 이 문제는 그래프 이론의 해밀턴 경로 문제의 특수한 경우로 분류됩니다.
-
-### Warnsdorff의 규칙
-1823년 H.C. Warnsdorff가 제안한 휴리스틱 알고리즘으로, 다음 이동 시 가장 적은 선택지를 가진 칸을 우선 선택하는 전략입니다. 이 규칙을 따르면 대부분의 경우 해를 찾을 수 있습니다.
-
----
-
-**바이브 코딩으로 만든 지능적이고 아름다운 기사의 여행을 즐겨보세요!** 🐎✨

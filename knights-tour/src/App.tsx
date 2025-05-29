@@ -1,31 +1,34 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import type { Position, GameStatus, Board, Move } from './types';
 import './App.css';
 
-function App() {
-  const [boardSize, setBoardSize] = useState(8); // 보드 크기를 state로 변경
-  const [board, setBoard] = useState([]); // 빈 배열로 초기화
-  const [currentPosition, setCurrentPosition] = useState({ row: 0, col: 0 });
-  const [moveCount, setMoveCount] = useState(1);
-  const [gameState, setGameState] = useState('playing'); // 'playing', 'won', 'stuck'
-  const [possibleMoves, setPossibleMoves] = useState([]);
+const App: React.FC = () => {
+  const [boardSize, setBoardSize] = useState<number>(8);
+  const [board, setBoard] = useState<Board>([]);
+  const [currentPosition, setCurrentPosition] = useState<Position>({ row: 0, col: 0 });
+  const [moveCount, setMoveCount] = useState<number>(1);
+  const [gameState, setGameState] = useState<GameStatus>('playing');
+  const [possibleMoves, setPossibleMoves] = useState<Position[]>([]);
 
   // 나이트의 움직임 (L자 모양) - useMemo로 최적화
-  const knightMoves = useMemo(() => [
-    [-2, -1], [-2, 1], [-1, -2], [-1, 2],
-    [1, -2], [1, 2], [2, -1], [2, 1]
+  const knightMoves = useMemo<Move[]>(() => [
+    { rowDelta: -2, colDelta: -1 }, { rowDelta: -2, colDelta: 1 },
+    { rowDelta: -1, colDelta: -2 }, { rowDelta: -1, colDelta: 2 },
+    { rowDelta: 1, colDelta: -2 }, { rowDelta: 1, colDelta: 2 },
+    { rowDelta: 2, colDelta: -1 }, { rowDelta: 2, colDelta: 1 }
   ], []);
 
   // 유효한 위치인지 확인
-  const isValidPosition = useCallback((row, col) => {
+  const isValidPosition = useCallback((row: number, col: number): boolean => {
     return row >= 0 && row < boardSize && col >= 0 && col < boardSize;
   }, [boardSize]);
 
   // 가능한 다음 움직임 계산
-  const calculatePossibleMoves = useCallback((row, col, currentBoard) => {
-    const moves = [];
-    for (const [dRow, dCol] of knightMoves) {
-      const newRow = row + dRow;
-      const newCol = col + dCol;
+  const calculatePossibleMoves = useCallback((row: number, col: number, currentBoard: Board): Position[] => {
+    const moves: Position[] = [];
+    for (const { rowDelta, colDelta } of knightMoves) {
+      const newRow = row + rowDelta;
+      const newCol = col + colDelta;
       if (isValidPosition(newRow, newCol) && currentBoard[newRow][newCol] === 0) {
         moves.push({ row: newRow, col: newCol });
       }
@@ -34,9 +37,9 @@ function App() {
   }, [knightMoves, isValidPosition]);
 
   // 게임 초기화
-  const initializeGame = useCallback(() => {
-    const newBoard = Array(boardSize).fill(null).map(() => Array(boardSize).fill(0));
-    const startPos = { row: 0, col: 0 };
+  const initializeGame = useCallback((): void => {
+    const newBoard: Board = Array(boardSize).fill(null).map(() => Array(boardSize).fill(0));
+    const startPos: Position = { row: 0, col: 0 };
     newBoard[startPos.row][startPos.col] = 1;
 
     setBoard(newBoard);
@@ -49,7 +52,7 @@ function App() {
   }, [calculatePossibleMoves, boardSize]);
 
   // 보드 크기 변경 처리
-  const handleBoardSizeChange = useCallback((newSize) => {
+  const handleBoardSizeChange = useCallback((newSize: number): void => {
     setBoardSize(newSize);
   }, []);
 
@@ -59,10 +62,10 @@ function App() {
   }, [initializeGame]);
 
   // 칸 클릭 처리
-  const handleCellClick = useCallback((row, col) => {
-    console.log('Cell clicked:', row, col); // 디버깅용
-    console.log('Game state:', gameState); // 디버깅용
-    console.log('Possible moves:', possibleMoves); // 디버깅용
+  const handleCellClick = useCallback((row: number, col: number): void => {
+    console.log('Cell clicked:', row, col);
+    console.log('Game state:', gameState);
+    console.log('Possible moves:', possibleMoves);
 
     if (gameState !== 'playing') {
       console.log('Game not in playing state');
@@ -106,7 +109,7 @@ function App() {
   }, [gameState, possibleMoves, board, moveCount, calculatePossibleMoves, boardSize]);
 
   // 셀 렌더링
-  const renderCell = useCallback((row, col) => {
+  const renderCell = useCallback((row: number, col: number): React.ReactElement => {
     // 보드가 아직 초기화되지 않은 경우 방어
     if (!board || !board[row]) {
       return (
@@ -141,7 +144,7 @@ function App() {
   }, [board, currentPosition, possibleMoves, handleCellClick]);
 
   // 게임 상태 메시지
-  const getStatusMessage = () => {
+  const getStatusMessage = (): string => {
     switch (gameState) {
       case 'won':
         return '🎉 축하합니다! 기사의 여행을 완성했습니다!';
@@ -153,10 +156,10 @@ function App() {
   };
 
   // 힌트 시스템 (Warnsdorff의 규칙 적용)
-  const getHint = () => {
+  const getHint = (): Position | null => {
     if (possibleMoves.length === 0) return null;
 
-    let bestMove = null;
+    let bestMove: Position | null = null;
     let minDegree = Infinity;
 
     for (const move of possibleMoves) {
@@ -175,6 +178,10 @@ function App() {
 
   const hint = getHint();
 
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+    handleBoardSizeChange(parseInt(e.target.value));
+  };
+
   return (
     <div className="App">
       <div className="game-container">
@@ -188,7 +195,7 @@ function App() {
           <select
             id="boardSize"
             value={boardSize}
-            onChange={(e) => handleBoardSizeChange(parseInt(e.target.value))}
+            onChange={handleSelectChange}
             className="board-size-selector"
           >
             <option value={5}>5×5</option>
@@ -252,6 +259,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
-export default App;
+export default App; 

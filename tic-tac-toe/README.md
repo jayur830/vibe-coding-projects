@@ -1,8 +1,8 @@
-# 틱택토 게임 (Tic-Tac-Toe)
+# 틱택토 게임 (Tic-Tac-Toe) - Vite
 
-*이 프로젝트는 바이브 코딩으로 제작되었습니다.*
+> *이 프로젝트는 바이브 코딩으로 제작되었습니다.*
 
-React로 만든 아름다운 틱택토 게임입니다! 🎮
+React와 Vite로 만든 아름다운 틱택토 게임입니다! 🎮
 
 ## 특징
 
@@ -12,6 +12,8 @@ React로 만든 아름다운 틱택토 게임입니다! 🎮
 - 📱 반응형 디자인 (모바일 친화적)
 - 🔄 게임 재시작 기능
 - 🎯 무승부 감지 기능
+- ⚡ Vite 기반의 빠른 개발 서버와 빌드
+- 🧪 Vitest와 React Testing Library를 활용한 포괄적인 테스트
 
 ## 게임 규칙
 
@@ -24,26 +26,56 @@ React로 만든 아름다운 틱택토 게임입니다! 🎮
 ### 개발 환경에서 실행
 
 \`\`\`bash
-cd tic-tac-toe
+cd tic-tac-toe-vite
 npm install
-npm start
+npm run dev
 \`\`\`
 
-브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 게임을 플레이하세요.
+브라우저에서 [http://localhost:5173](http://localhost:5173)을 열어 게임을 플레이하세요.
+
+### 테스트 실행
+
+\`\`\`bash
+# 테스트 실행
+npm run test
+
+# UI 모드로 테스트 실행
+npm run test:ui
+
+# 커버리지 리포트와 함께 테스트 실행
+npm run test:coverage
+\`\`\`
 
 ### 프로덕션 빌드
 
 \`\`\`bash
 npm run build
+npm run preview
 \`\`\`
 
 ## 사용된 기술
 
 - **React**: 컴포넌트 기반 UI 프레임워크
+- **TypeScript**: 타입 안전성을 위한 정적 타입 시스템
+- **Vite**: 빠른 빌드 도구 및 개발 서버
+- **Vitest**: Vite 네이티브 테스트 프레임워크
+- **React Testing Library**: React 컴포넌트 테스트
 - **CSS3**: 그라디언트, 애니메이션, 반응형 디자인
-- **JavaScript ES6+**: 최신 JavaScript 문법
 
-## 게임 스크린샷
+## 프로젝트 구조
+
+\`\`\`
+src/
+├── App.tsx          # 메인 게임 컴포넌트
+├── App.css          # 게임 스타일
+├── App.test.tsx     # 게임 테스트
+├── types.ts         # TypeScript 타입 정의
+├── main.tsx         # 앱 진입점
+├── index.css        # 글로벌 스타일
+└── setupTests.ts    # 테스트 설정
+\`\`\`
+
+## 게임 기능
 
 게임은 다음과 같은 기능들을 포함합니다:
 
@@ -51,5 +83,18 @@ npm run build
 - 승리자 발표
 - 승리 라인 하이라이트
 - 게임 재시작 버튼
+- 게임 종료 후 클릭 방지
+- 무승부 감지 및 표시
+
+## 테스트 커버리지
+
+이 프로젝트는 포괄적인 테스트를 포함합니다:
+
+- UI 렌더링 테스트
+- 게임 로직 테스트
+- 사용자 상호작용 테스트
+- 승리 조건 테스트
+- 무승부 시나리오 테스트
+- 접근성 테스트
 
 즐거운 게임 되세요! 🎉

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import type { Board, Player, CellValue, WinInfo } from './types.ts';
 import './App.css';
 
-function App() {
-  const [board, setBoard] = useState(Array(9).fill(null));
-  const [isXNext, setIsXNext] = useState(true);
-  const [winner, setWinner] = useState(null);
-  const [winningLine, setWinningLine] = useState([]);
+const App: React.FC = () => {
+  const [board, setBoard] = useState<Board>(Array(9).fill(null));
+  const [isXNext, setIsXNext] = useState<boolean>(true);
+  const [winner, setWinner] = useState<Player | null>(null);
+  const [winningLine, setWinningLine] = useState<number[]>([]);
 
-  const calculateWinner = (squares) => {
-    const lines = [
+  const calculateWinner = (squares: Board): WinInfo | null => {
+    const lines: number[][] = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -22,52 +23,56 @@ function App() {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return { winner: squares[a], line: lines[i] };
+        return { 
+          winner: squares[a] as Player, 
+          winningLine: lines[i] 
+        };
       }
     }
     return null;
   };
 
-  const handleClick = (index) => {
+  const handleClick = (index: number): void => {
     if (board[index] || winner) {
       return;
     }
 
-    const newBoard = board.slice();
+    const newBoard: Board = board.slice();
     newBoard[index] = isXNext ? 'X' : 'O';
     setBoard(newBoard);
 
     const result = calculateWinner(newBoard);
     if (result) {
       setWinner(result.winner);
-      setWinningLine(result.line);
+      setWinningLine(result.winningLine);
     } else {
       setIsXNext(!isXNext);
     }
   };
 
-  const resetGame = () => {
+  const resetGame = (): void => {
     setBoard(Array(9).fill(null));
     setIsXNext(true);
     setWinner(null);
     setWinningLine([]);
   };
 
-  const renderSquare = (index) => {
+  const renderSquare = (index: number): React.ReactElement => {
     const isWinningSquare = winningLine.includes(index);
     return (
       <button
         className={`square ${isWinningSquare ? 'winning' : ''}`}
         onClick={() => handleClick(index)}
+        key={index}
       >
         {board[index]}
       </button>
     );
   };
 
-  const isDraw = !winner && board.every(square => square !== null);
+  const isDraw: boolean = !winner && board.every((square: CellValue) => square !== null);
 
-  let status;
+  let status: string;
   if (winner) {
     status = `승리자: ${winner}`;
   } else if (isDraw) {
@@ -104,6 +109,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
