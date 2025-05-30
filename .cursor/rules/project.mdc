@@ -67,6 +67,10 @@ alwaysApply: true
 - Group related tests using `describe` blocks
 - Mock external dependencies appropriately
 - Test both success and failure scenarios
+- **테스트 실행 시 watch 모드를 사용하지 마세요 - 일반 실행 모드를 사용하세요**
+- Use `npm run test` or `vitest run` for single test runs
+- Avoid watch mode unless specifically needed for development
+- Always run tests in CI/CD with `--run` flag to prevent hanging
 
 ### File Structure
 - Organize files by feature, not by file type
@@ -107,10 +111,11 @@ alwaysApply: true
 ## Automation and CI/CD
 
 ### Development Workflow
-- Run tests automatically on save using Vitest watch mode
+- Run tests in single execution mode using `vitest run` instead of watch mode
 - Use pre-commit hooks for code quality checks
 - Implement automated testing in CI/CD pipeline
 - Ensure all tests pass before merging to main branch
+- **테스트 검증 시에는 항상 단일 실행 모드를 사용하세요**
 
 ### Code Quality Tools
 - Use ESLint with TypeScript support
@@ -134,11 +139,14 @@ For Vite projects, use these standard scripts:
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage"
   }
 }
 ```
+
+**중요**: 기본 `test` 스크립트는 항상 단일 실행 모드(`vitest run`)를 사용하며, watch 모드가 필요한 경우에만 `test:watch`를 사용하세요.
 
 Remember: These rules exist to ensure consistent, high-quality code that is well-tested and maintainable. Always prioritize test coverage and code quality over speed of delivery. Use Vite for modern, fast development experience with React applications. 
